@@ -11,55 +11,21 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
-// rcpparma_hello_world
-arma::mat rcpparma_hello_world();
-RcppExport SEXP _lacunaRity_rcpparma_hello_world() {
+// gliding_box
+DataFrame gliding_box(arma::ucube C, IntegerVector box_sizes);
+RcppExport SEXP _lacunaRity_gliding_box(SEXP CSEXP, SEXP box_sizesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    rcpp_result_gen = Rcpp::wrap(rcpparma_hello_world());
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_outerproduct
-arma::mat rcpparma_outerproduct(const arma::colvec& x);
-RcppExport SEXP _lacunaRity_rcpparma_outerproduct(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_outerproduct(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_innerproduct
-double rcpparma_innerproduct(const arma::colvec& x);
-RcppExport SEXP _lacunaRity_rcpparma_innerproduct(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_innerproduct(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcpparma_bothproducts
-Rcpp::List rcpparma_bothproducts(const arma::colvec& x);
-RcppExport SEXP _lacunaRity_rcpparma_bothproducts(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::colvec& >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcpparma_bothproducts(x));
+    Rcpp::traits::input_parameter< arma::ucube >::type C(CSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type box_sizes(box_sizesSEXP);
+    rcpp_result_gen = Rcpp::wrap(gliding_box(C, box_sizes));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_lacunaRity_rcpparma_hello_world", (DL_FUNC) &_lacunaRity_rcpparma_hello_world, 0},
-    {"_lacunaRity_rcpparma_outerproduct", (DL_FUNC) &_lacunaRity_rcpparma_outerproduct, 1},
-    {"_lacunaRity_rcpparma_innerproduct", (DL_FUNC) &_lacunaRity_rcpparma_innerproduct, 1},
-    {"_lacunaRity_rcpparma_bothproducts", (DL_FUNC) &_lacunaRity_rcpparma_bothproducts, 1},
+    {"_lacunaRity_gliding_box", (DL_FUNC) &_lacunaRity_gliding_box, 2},
     {NULL, NULL, 0}
 };
 
