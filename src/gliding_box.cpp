@@ -99,9 +99,14 @@ DataFrame gliding_box(arma::ucube C, IntegerVector box_sizes) {
     sizes(i) = box_size;
     lacunarity(i) = Lac;
   }
-  // return dataframe of box sizes and mass vectors
+  
+  // calculate normalized lacunarity
+  arma::vec lacnorm = lacunarity / lac1;
+  
+  // return dataframe of box sizes and lacunarity values
   DataFrame lac_curve = 
     DataFrame::create(Named("box_size") = sizes,
-                      Named("lacunarity") = lacunarity);
+                      Named("lacunarity") = lacunarity,
+                      Named("lac_norm") = lacnorm);
   return lac_curve;
 }

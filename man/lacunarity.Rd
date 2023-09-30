@@ -2,7 +2,7 @@
 % Please edit documentation in R/lacunarity.R
 \name{lacunarity}
 \alias{lacunarity}
-\title{Gliding-box lacunarity}
+\title{Calculate gliding-box lacunarity}
 \usage{
 lacunarity(x, box_sizes = "twos")
 }
@@ -11,19 +11,30 @@ lacunarity(x, box_sizes = "twos")
 
 \item{box_sizes}{Which box sizes to use for calculating lacunarity:
 \itemize{
-\item "twos" returns box sizes for all powers of two less
-than or equal to the smallest dimension of \code{x}.
+\item "twos" (the default) returns box sizes for all powers of two less than or
+equal to the smallest dimension of \code{x}.
 \item "all" calculates every possible box size up to the smallest dimension of \code{x}.
+\item Alternatively, users may supply their own \code{\link[=vector]{vector}} of custom
+box sizes. This vector must be of type "\code{numeric}" and can only contain
+positive values. Values which exceed the dimensions of \code{x} are ignored.
 }}
 }
 \value{
-a \code{\link[=data.frame]{data.frame}} containing box sizes and their
-corresponding lacunarity values
+A \code{\link[=data.frame]{data.frame}} containing box sizes and their
+corresponding raw and normalized lacunarity values. Lacunarity is always
+computed for box size 1, even if the user supplies a custom \code{box_sizes}
+vector that omits it, as this value is required to calculate normalized
+lacunarity.
 }
 \description{
-Gliding-box lacunarity
+Generates lacunarity values for a specified range of box sizes, using one of
+two versions of the gliding-box algorithm
 }
 \examples{
+# generate array
 a <- array(data = rep(c(1,0), 125), dim = c(5,5,5))
+# calculate lacunarity with default options
 lacunarity(a)
+# supply custom vector of box sizes
+lacunarity(a, box_sizes = c(1,3,5))
 }
