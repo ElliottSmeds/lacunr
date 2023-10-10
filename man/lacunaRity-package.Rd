@@ -6,7 +6,7 @@
 \alias{lacunaRity-package}
 \title{lacunaRity: Fast 3D Lacunarity for LiDAR Voxel Data}
 \description{
-Calculates lacunarity curves for 3D voxel data using a fast version of the gliding-box algorithm implemented in C++. Gliding-box lacunarity can be calculated using the traditional fixed-boundary algorithm or the periodic-boundary algorithm introduced by Feagin et al 2006.
+Calculates lacunarity curves for 3D voxel data using a fast C++ implementation of the gliding-box algorithm. Gliding-box lacunarity can be calculated using the traditional fixed-boundary algorithm or the periodic-boundary algorithm introduced by Feagin et al 2006.
 }
 \seealso{
 Useful links:

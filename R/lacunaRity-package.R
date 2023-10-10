@@ -3,6 +3,7 @@
 
 ## usethis namespace: start
 #' @importFrom Rcpp sourceCpp
+#' @import data.table
 #' @useDynLib lacunaRity, .registration = TRUE
 #' @exportPattern "^[[:alpha:]]+"
 ## usethis namespace: end

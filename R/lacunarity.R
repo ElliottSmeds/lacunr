@@ -1,16 +1,20 @@
 #' Calculate gliding-box lacunarity
 #'
-#' Generates lacunarity values for a specified range of box sizes, using one of
+#' Generates lacunarity values for a specified set of box sizes, using one of
 #' two versions of the gliding-box algorithm
 #'
-#' @param x a 3-dimensional [`array`][array()] of integer values
+#' @param x A 3-dimensional [`array`][array()] of integer values
 #' @param box_sizes Which box sizes to use for calculating lacunarity:
-#'   * "twos" (the default) returns box sizes for all powers of two less than or
+#'   * `"twos"` (the default) returns box sizes for all powers of two less than or
 #'   equal to the smallest dimension of `x`.
-#'   * "all" calculates every possible box size up to the smallest dimension of `x`.
+#'   * `"all"` calculates every possible box size up to the smallest dimension of `x`.
 #'   * Alternatively, users may supply their own [`vector`][vector()] of custom
 #'   box sizes. This vector must be of type "`numeric`" and can only contain
 #'   positive values. Values which exceed the dimensions of `x` are ignored.
+#' @param periodic A Boolean. Determines which boundary algorithm to use, the 
+#'   classic fixed boundary (default) or the periodic boundary algorithm 
+#'   introduced by Feagin et al. 2006. The latter is slightly slower but is more 
+#'   robust to edge effects.
 #'
 #' @return A [`data.frame`][data.frame()] containing box sizes and their
 #'   corresponding raw and normalized lacunarity values. Lacunarity is always
@@ -26,12 +30,17 @@
 #' lacunarity(a)
 #' # supply custom vector of box sizes
 #' lacunarity(a, box_sizes = c(1,3,5))
+#' # calculate lacunarity at all box sizes using the periodic boundary algorithm
+#' lacunarity(a, box_sizes = "all", periodic = TRUE)
 
-lacunarity <- function(x, box_sizes = "twos"){
+lacunarity <- function(x, 
+                       box_sizes = "twos",
+                       periodic = FALSE)
+  {
   
   # ------------------------------ Check array ---------------------------------
   # check dimensions of array
-  if (length(dim(x)) < 3 | length(dim(x)) > 3){
+  if (length(dim(x)) != 3){
     stop("input array must have 3 dimensions")
   }
   
@@ -107,8 +116,18 @@ lacunarity <- function(x, box_sizes = "twos"){
   }
   
   # -------------------------- Calculate lacunarity ----------------------------
-  # pass the array and box_sizes vector to C++ function
-  lac_curve <- .gliding_box(C = x, box_sizes = sizes)
+  # pass the array and box_sizes vector to the desired C++ function
+  if (periodic == FALSE){
+    lac_curve <- .gliding_box(C = x, box_sizes = sizes)
+  }
+  
+  else if (periodic == TRUE){
+    lac_curve <- .gliding_box_periodic(C = x, box_sizes = sizes)
+  }
+  
+  else {
+    stop("invalid input for 'periodic', see ?lacunarity() for valid options")
+  }
   
   return(lac_curve)
 }

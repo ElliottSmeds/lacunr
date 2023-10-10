@@ -4,20 +4,25 @@
 \alias{lacunarity}
 \title{Calculate gliding-box lacunarity}
 \usage{
-lacunarity(x, box_sizes = "twos")
+lacunarity(x, box_sizes = "twos", periodic = FALSE)
 }
 \arguments{
-\item{x}{a 3-dimensional \code{\link[=array]{array}} of integer values}
+\item{x}{A 3-dimensional \code{\link[=array]{array}} of integer values}
 
 \item{box_sizes}{Which box sizes to use for calculating lacunarity:
 \itemize{
-\item "twos" (the default) returns box sizes for all powers of two less than or
+\item \code{"twos"} (the default) returns box sizes for all powers of two less than or
 equal to the smallest dimension of \code{x}.
-\item "all" calculates every possible box size up to the smallest dimension of \code{x}.
+\item \code{"all"} calculates every possible box size up to the smallest dimension of \code{x}.
 \item Alternatively, users may supply their own \code{\link[=vector]{vector}} of custom
 box sizes. This vector must be of type "\code{numeric}" and can only contain
 positive values. Values which exceed the dimensions of \code{x} are ignored.
 }}
+
+\item{periodic}{A Boolean. Determines which boundary algorithm to use, the
+classic fixed boundary (default) or the periodic boundary algorithm
+introduced by Feagin et al. 2006. The latter is slightly slower but is more
+robust to edge effects.}
 }
 \value{
 A \code{\link[=data.frame]{data.frame}} containing box sizes and their
@@ -27,7 +32,7 @@ vector that omits it, as this value is required to calculate normalized
 lacunarity.
 }
 \description{
-Generates lacunarity values for a specified range of box sizes, using one of
+Generates lacunarity values for a specified set of box sizes, using one of
 two versions of the gliding-box algorithm
 }
 \examples{
@@ -37,4 +42,6 @@ a <- array(data = rep(c(1,0), 125), dim = c(5,5,5))
 lacunarity(a)
 # supply custom vector of box sizes
 lacunarity(a, box_sizes = c(1,3,5))
+# calculate lacunarity at all box sizes using the periodic boundary algorithm
+lacunarity(a, box_sizes = "all", periodic = TRUE)
 }

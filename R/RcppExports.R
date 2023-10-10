@@ -5,3 +5,11 @@
     .Call(`_lacunaRity_gliding_box`, C, box_sizes)
 }
 
+.gliding_box_periodic <- function(C, box_sizes) {
+    .Call(`_lacunaRity_gliding_box_periodic`, C, box_sizes)
+}
+
+.voxelize_C <- function(pc, edge_length, threads = 1L) {
+    .Call(`_lacunaRity_voxelization_rcpp`, pc, edge_length, threads)
+}
+

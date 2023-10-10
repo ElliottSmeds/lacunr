@@ -2,6 +2,7 @@
 // Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #include <RcppArmadillo.h>
+#include <RcppThread.h>
 #include <Rcpp.h>
 
 using namespace Rcpp;
@@ -23,9 +24,36 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// gliding_box_periodic
+DataFrame gliding_box_periodic(arma::ucube C, IntegerVector box_sizes);
+RcppExport SEXP _lacunaRity_gliding_box_periodic(SEXP CSEXP, SEXP box_sizesSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::ucube >::type C(CSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type box_sizes(box_sizesSEXP);
+    rcpp_result_gen = Rcpp::wrap(gliding_box_periodic(C, box_sizes));
+    return rcpp_result_gen;
+END_RCPP
+}
+// voxelization_rcpp
+arma::mat voxelization_rcpp(arma::mat pc, arma::vec edge_length, int threads);
+RcppExport SEXP _lacunaRity_voxelization_rcpp(SEXP pcSEXP, SEXP edge_lengthSEXP, SEXP threadsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< arma::mat >::type pc(pcSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type edge_length(edge_lengthSEXP);
+    Rcpp::traits::input_parameter< int >::type threads(threadsSEXP);
+    rcpp_result_gen = Rcpp::wrap(voxelization_rcpp(pc, edge_length, threads));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_lacunaRity_gliding_box", (DL_FUNC) &_lacunaRity_gliding_box, 2},
+    {"_lacunaRity_gliding_box_periodic", (DL_FUNC) &_lacunaRity_gliding_box_periodic, 2},
+    {"_lacunaRity_voxelization_rcpp", (DL_FUNC) &_lacunaRity_voxelization_rcpp, 3},
     {NULL, NULL, 0}
 };
 
