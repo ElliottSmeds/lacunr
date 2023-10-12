@@ -8,6 +8,9 @@
 \description{
 Calculates lacunarity curves for 3D voxel data using a fast C++ implementation of the gliding-box algorithm. Gliding-box lacunarity can be calculated using the traditional fixed-boundary algorithm or the periodic-boundary algorithm introduced by Feagin et al 2006.
 }
+\details{
+text
+}
 \seealso{
 Useful links:
 \itemize{

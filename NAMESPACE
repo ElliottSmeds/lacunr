@@ -2,6 +2,7 @@
 
 S3method(bounding_box,default)
 S3method(bounding_box,lac_voxels)
+S3method(bounding_box,lasmetrics3d)
 export(bounding_box)
 export(lacunarity)
 export(voxelize)
