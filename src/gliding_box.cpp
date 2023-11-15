@@ -100,7 +100,7 @@ DataFrame gliding_box(arma::ucube C, IntegerVector box_sizes) {
   }
   
   // calculate normalized lacunarity
-  arma::vec lacnorm = lacunarity / lac1;
+  arma::vec lacnorm = arma::log(lacunarity) / log(lac1);
   
   // return dataframe of box sizes and lacunarity values
   DataFrame lac_curve = 
@@ -208,7 +208,7 @@ DataFrame gliding_box_periodic(arma::ucube C, IntegerVector box_sizes) {
   }
   
   // calculate normalized lacunarity
-  arma::vec lacnorm = lacunarity / lac1;
+  arma::vec lacnorm = arma::log(lacunarity) / log(lac1);
   
   // return dataframe of box sizes and lacunarity values
   DataFrame lac_curve = 
