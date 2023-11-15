@@ -1,7 +1,14 @@
 #' Calculate gliding-box lacunarity
 #'
-#' Generates lacunarity values for a specified set of box sizes, using one of
-#' two versions of the gliding-box algorithm
+#' Generates Λ(r) lacunarity curves for a specified set of box sizes, using one
+#' of two versions of the gliding-box algorithm
+#'
+#' @details The raw Λ(r) values depend on the proportion of occupied voxels
+#'   within the data space. As a result, it is difficult to compare two spatial
+#'   patterns with different occupancy proportions because the curves will begin
+#'   at different y-intercepts. This is rectified by normalizing the curve,
+#'   typically by log-transforming it and dividing by the lacunarity value at
+#'   the smallest box size (i.e. `log(Λ(r))/log(Λ(1))`).
 #'
 #' @param x A 3-dimensional [`array`][array()] of integer values
 #' @param box_sizes Which box sizes to use for calculating lacunarity:
@@ -17,10 +24,10 @@
 #'   robust to edge effects.
 #'
 #' @return A [`data.frame`][data.frame()] containing box sizes and their
-#'   corresponding raw and normalized lacunarity values. Lacunarity is always
-#'   computed for box size 1, even if the user supplies a custom `box_sizes`
-#'   vector that omits it, as this value is required to calculate normalized
-#'   lacunarity.
+#'   corresponding raw and normalized Λ(r) lacunarity values. Lacunarity is
+#'   always computed for box size 1, even if the user supplies a custom
+#'   `box_sizes` vector that omits it, as this value is required to calculate
+#'   normalized lacunarity.
 #' @export
 #'
 #' @examples
