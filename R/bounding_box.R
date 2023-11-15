@@ -26,7 +26,7 @@
 #'   [lidR::voxel_metrics()].
 #' @param threshold An integer specifying the minimum number of points to use
 #'   when determining if a voxel is occupied. The default is `0`.
-#'   `bounding_box()` retains only those voxels where `X$N` is greater than
+#'   `bounding_box()` retains only those voxels where `x$N` is greater than
 #'   `threshold`.
 #'
 #' @return A 3-dimensional integer [`array`][`array()`] containing values of `0`

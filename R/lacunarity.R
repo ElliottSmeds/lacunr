@@ -11,9 +11,9 @@
 #'   * Alternatively, users may supply their own [`vector`][vector()] of custom
 #'   box sizes. This vector must be of type "`numeric`" and can only contain
 #'   positive values. Values which exceed the dimensions of `x` are ignored.
-#' @param periodic A Boolean. Determines which boundary algorithm to use, the 
-#'   classic fixed boundary (default) or the periodic boundary algorithm 
-#'   introduced by Feagin et al. 2006. The latter is slightly slower but is more 
+#' @param periodic A Boolean. Determines which boundary algorithm to use, the
+#'   classic fixed boundary (default) or the periodic boundary algorithm
+#'   introduced by Feagin et al. 2006. The latter is slightly slower but is more
 #'   robust to edge effects.
 #'
 #' @return A [`data.frame`][data.frame()] containing box sizes and their

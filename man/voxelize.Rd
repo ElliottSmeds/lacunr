@@ -18,8 +18,10 @@ values for the X, Y, and Z dimensions of each voxel.}
 Default is 1.}
 }
 \value{
-A \code{\link[=data.table]{data.table}} with 4 columns: the XYZ coordinates
-and the total number of points contained within each voxel.
+A data object of class '\code{lac_voxels}', which inherits from
+\code{\link[=data.table]{data.table}}. The output contains 4 columns: X, Y, Z, and
+N. The first three columns encode the spatial coordinates of each voxel
+while the fourth denotes the total number of points they contain.
 }
 \description{
 Bins point cloud data into 3D pixels, otherwise known as 'voxels'.

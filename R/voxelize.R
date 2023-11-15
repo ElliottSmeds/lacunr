@@ -3,15 +3,17 @@
 #' Bins point cloud data into 3D pixels, otherwise known as 'voxels'.
 #'
 #' @param x A [`data.frame`][data.frame()] or [`data.table`][`data.table()`]
-#'   with columns containing the X, Y, and Z coordinates of every point. Any 
+#'   with columns containing the X, Y, and Z coordinates of every point. Any
 #'   additional columns are ignored.
 #' @param edge_length A numeric [`vector`][vector()] of length `3`, containing
 #'   values for the X, Y, and Z dimensions of each voxel.
 #' @param threads The number of threads to use for computing the voxel data.
 #'   Default is 1.
 #'
-#' @return A [`data.table`][`data.table()`] with 4 columns: the XYZ coordinates
-#'   and the total number of points contained within each voxel.
+#' @return A data object of class '`lac_voxels`', which inherits from
+#'   [`data.table`][`data.table()`]. The output contains 4 columns: X, Y, Z, and
+#'   N. The first three columns encode the spatial coordinates of each voxel
+#'   while the fourth denotes the total number of points they contain.
 #' @export
 #'
 #' @examples
@@ -22,12 +24,12 @@
 #' 
 voxelize <- function(x, edge_length, threads = 1L) {
   # -------------------------------- Checks ------------------------------------
-  # check that the point-cloud data has at least 3 columns
-  if (ncol(x) < 3){
-    stop("point cloud data has fewer than 3 columns")
+  # check that the required columns are present
+  if (!all(c("X", "Y", "Z") %in% names(x))){
+    stop("Required columns not found, input data must have columns $X, $Y, and $Z")
   }
   
-  # check that the first 3 columns are numeric
+  # check that the first XYZ columns are numeric
   if (!is.numeric(as.matrix(x[,c("X", "Y", "Z")]))){
     stop("point cloud data must be of type 'numeric'")
   }

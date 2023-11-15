@@ -17,7 +17,7 @@ and N columns, in which case the argument \code{edge_length} is required.}
 
 \item{threshold}{An integer specifying the minimum number of points to use
 when determining if a voxel is occupied. The default is \code{0}.
-\code{bounding_box()} retains only those voxels where \code{X$N} is greater than
+\code{bounding_box()} retains only those voxels where \code{x$N} is greater than
 \code{threshold}.}
 
 \item{edge_length}{a numeric vector of length 3, specifying the X, Y, and Z
