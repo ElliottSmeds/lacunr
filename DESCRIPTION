@@ -3,10 +3,14 @@ Type: Package
 Title: Fast 3D Lacunarity for LiDAR Voxel Data
 Version: 0.1.0
 Date: 2023-10-12
-Authors@R: person("Elliott", "Smeds",
-  email = "elliott.alfred93@gmail.com",
-  role = c("aut", "cre"),
-  comment = c(ORCID = "0000-0003-1054-7491"))
+Authors@R: 
+  c(person("Elliott", "Smeds",
+           email = "elliott.alfred93@gmail.com",
+           role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-1054-7491")),
+  person("J. Antonio", "Guzmán Q.",
+         role = "cph",
+         comment = "Author of original version of voxelize() function"))
 URL: https://github.com/ElliottSmeds/lacunr
 BugReports: https://github.com/ElliottSmeds/lacunr/issues
 Description: Calculates lacunarity curves for 3D voxel data using a fast C++  
