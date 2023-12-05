@@ -22,5 +22,10 @@ Useful links:
 \author{
 \strong{Maintainer}: Elliott Smeds \email{elliott.alfred93@gmail.com} (\href{https://orcid.org/0000-0003-1054-7491}{ORCID})
 
+Other contributors:
+\itemize{
+  \item J. Antonio Guzmán Q. (Author of original version of voxelize() function) [copyright holder]
+}
+
 }
 \keyword{internal}

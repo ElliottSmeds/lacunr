@@ -26,22 +26,23 @@ robust to edge effects.}
 }
 \value{
 A \code{\link[=data.frame]{data.frame}} containing box sizes and their
-corresponding raw and normalized Λ(r) lacunarity values. Lacunarity is always
-computed for box size 1, even if the user supplies a custom \code{box_sizes}
-vector that omits it, as this value is required to calculate normalized
-lacunarity.
+corresponding raw and normalized Λ(r) lacunarity values. Lacunarity is
+always computed for box size 1, even if the user supplies a custom
+\code{box_sizes} vector that omits it, as this value is required to calculate
+normalized lacunarity.
 }
 \description{
 Generates Λ(r) lacunarity curves for a specified set of box sizes, using one
 of two versions of the gliding-box algorithm
 }
 \details{
-The raw lacunarity values depend on the proportion of occupied
-voxels within the data space. As a result, it is difficult to compare two
-spatial patterns with different occupancy proportions because the curves
-will begin at different y-intercepts. This is rectified by normalizing the
-curve, typically by log-transforming it and dividing by the lacunarity
-value at the smallest box size (i.e. \code{log(Λ(r))/log(Λ(1))}).
+The raw Λ(r) values depend on the proportion of occupied voxels
+within the data space. As a result, it is difficult to compare two spatial
+patterns with different occupancy proportions because the curves will begin
+at different y-intercepts. This is rectified by normalizing the curve,
+typically by log-transforming it and dividing by the lacunarity value at
+the smallest box size (i.e. \code{log(Λ(r))/log(Λ(1))}). \code{lacunarity()} outputs
+both normalized and non-normalized Λ(r) curves for convenience.
 }
 \examples{
 # generate array

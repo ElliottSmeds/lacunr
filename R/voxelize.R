@@ -6,7 +6,7 @@
 #'   with columns containing the X, Y, and Z coordinates of every point. Any
 #'   additional columns are ignored.
 #' @param edge_length A numeric [`vector`][vector()] of length `3`, containing
-#'   values for the X, Y, and Z dimensions of each voxel.
+#'   values for the desired X, Y, and Z dimensions of each voxel.
 #' @param threads The number of threads to use for computing the voxel data.
 #'   Default is 1.
 #'

@@ -8,7 +8,8 @@
 #'   patterns with different occupancy proportions because the curves will begin
 #'   at different y-intercepts. This is rectified by normalizing the curve,
 #'   typically by log-transforming it and dividing by the lacunarity value at
-#'   the smallest box size (i.e. `log(Λ(r))/log(Λ(1))`).
+#'   the smallest box size (i.e. `log(Λ(r))/log(Λ(1))`). `lacunarity()` outputs 
+#'   both normalized and non-normalized Λ(r) curves for convenience.
 #'
 #' @param x A 3-dimensional [`array`][array()] of integer values
 #' @param box_sizes Which box sizes to use for calculating lacunarity:
