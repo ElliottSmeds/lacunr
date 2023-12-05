@@ -1,5 +1,6 @@
 // A script for performing gliding box lacunarity calculation for 3d voxel arrays
 // using the integral image algorithm (Williams 2015)
+// Author: Elliott A. Smeds
 
 #include <RcppArmadillo.h>
 
@@ -12,9 +13,9 @@ using namespace Rcpp;
 DataFrame gliding_box(arma::ucube C, IntegerVector box_sizes) {
   
   // define dimensions of array
-  int Xdim = C.n_rows;
-  int Ydim = C.n_cols;
-  int Zdim = C.n_slices;
+  unsigned int Xdim = C.n_rows;
+  unsigned int Ydim = C.n_cols;
+  unsigned int Zdim = C.n_slices;
   
   // initialize vectors for box size and lacunarity
   arma::uvec sizes(box_sizes.size());
@@ -89,9 +90,9 @@ DataFrame gliding_box(arma::ucube C, IntegerVector box_sizes) {
       ;
     
     // calculate lacunarity from box mass array
-    double boxes = M.n_elem;
-    double numerator = arma::accu(M % M);
-    double denominator = arma::accu(M);
+    double boxes = M.n_elem; // the number of elements in the array
+    double numerator = arma::accu(M % M); // the sum of the squared box masses
+    double denominator = arma::accu(M); // the sum of the box masses (will be squared in next step)
     double Lac = boxes * numerator / (denominator * denominator);
     
     // output box size and lacunarity to vectors
@@ -115,9 +116,9 @@ DataFrame gliding_box(arma::ucube C, IntegerVector box_sizes) {
 DataFrame gliding_box_periodic(arma::ucube C, IntegerVector box_sizes) {
   
   // define dimensions of array
-  int Xdim = C.n_rows;
-  int Ydim = C.n_cols;
-  int Zdim = C.n_slices;
+  unsigned int Xdim = C.n_rows;
+  unsigned int Ydim = C.n_cols;
+  unsigned int Zdim = C.n_slices;
   
   // initialize vectors for box size and lacunarity
   arma::uvec sizes(box_sizes.size());
@@ -197,9 +198,9 @@ DataFrame gliding_box_periodic(arma::ucube C, IntegerVector box_sizes) {
       ;
     
     // calculate lacunarity from box mass array
-    double boxes = M.n_elem;
-    double numerator = arma::accu(M % M);
-    double denominator = arma::accu(M);
+    double boxes = M.n_elem; // the number of elements in the array
+    double numerator = arma::accu(M % M); // the sum of the squared box masses
+    double denominator = arma::accu(M); // the sum of the box masses (will be squared in next step)
     double Lac = boxes * numerator / (denominator * denominator);
     
     // output box size and lacunarity to vectors
