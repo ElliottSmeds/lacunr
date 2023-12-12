@@ -1,4 +1,3 @@
-#' @details text
 #' @keywords internal
 "_PACKAGE"
 

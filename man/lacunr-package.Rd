@@ -6,10 +6,7 @@
 \alias{lacunr-package}
 \title{lacunr: Fast 3D Lacunarity for LiDAR Voxel Data}
 \description{
-Calculates lacunarity curves for 3D voxel data using a fast C++ implementation of the gliding-box algorithm. Gliding-box lacunarity can be calculated using the traditional fixed-boundary algorithm or the periodic-boundary algorithm introduced by Feagin et al 2006.
-}
-\details{
-text
+Calculates 3D lacunarity from voxel data. It is designed to be used with LiDAR point clouds to measure the heterogeneity or "gappiness" of 3-dimensional structures such as forest stands. It provides fast C++ functions to efficiently convert point cloud data to voxels and calculate lacunarity using different variants of Allain & Cloitre's well-known gliding-box algorithm.
 }
 \seealso{
 Useful links:

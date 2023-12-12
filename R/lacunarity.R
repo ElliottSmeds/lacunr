@@ -8,7 +8,7 @@
 #'   patterns with different occupancy proportions because the curves will begin
 #'   at different y-intercepts. This is rectified by normalizing the curve,
 #'   typically by log-transforming it and dividing by the lacunarity value at
-#'   the smallest box size (i.e. `log(Λ(r))/log(Λ(1))`). `lacunarity()` outputs 
+#'   the smallest box size (i.e. `log(Λ(r))/log(Λ(1))`). `lacunarity()` outputs
 #'   both normalized and non-normalized Λ(r) curves for convenience.
 #'
 #' @param x A 3-dimensional [`array`][array()] of integer values
@@ -20,15 +20,23 @@
 #'   box sizes. This vector must be of type "`numeric`" and can only contain
 #'   positive values. Values which exceed the dimensions of `x` are ignored.
 #' @param periodic A Boolean. Determines which boundary algorithm to use, the
-#'   classic fixed boundary (default) or the periodic boundary algorithm
-#'   introduced by Feagin et al. 2006. The latter is slightly slower but is more
-#'   robust to edge effects.
+#'   classic fixed boundary by Allain and Cloitre (default) or the periodic
+#'   boundary algorithm introduced by Feagin et al. 2006. The latter is slightly
+#'   slower but is more robust to edge effects.
 #'
 #' @return A [`data.frame`][data.frame()] containing box sizes and their
 #'   corresponding raw and normalized Λ(r) lacunarity values. Lacunarity is
 #'   always computed for box size 1, even if the user supplies a custom
 #'   `box_sizes` vector that omits it, as this value is required to calculate
 #'   normalized lacunarity.
+#'
+#' @references Allain, C., & Cloitre, M. (1991). Characterizing the lacunarity
+#'   of random and deterministic fractal sets. *Physical Review A*, **44(6)**,
+#'   3552–3558. [https://doi.org/10.1103/PhysRevA.44.3552]().
+#'
+#'   Feagin, R. A., Wu, X. B., & Feagin, T. (2007). Edge effects in lacunarity
+#'   analysis. *Ecological Modelling*, **201(3–4)**, 262–268.
+#'   [https://doi.org/10.1016/j.ecolmodel.2006.09.019]().
 #' @export
 #'
 #' @examples

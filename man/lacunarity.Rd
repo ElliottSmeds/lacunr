@@ -20,9 +20,9 @@ positive values. Values which exceed the dimensions of \code{x} are ignored.
 }}
 
 \item{periodic}{A Boolean. Determines which boundary algorithm to use, the
-classic fixed boundary (default) or the periodic boundary algorithm
-introduced by Feagin et al. 2006. The latter is slightly slower but is more
-robust to edge effects.}
+classic fixed boundary by Allain and Cloitre (default) or the periodic
+boundary algorithm introduced by Feagin et al. 2006. The latter is slightly
+slower but is more robust to edge effects.}
 }
 \value{
 A \code{\link[=data.frame]{data.frame}} containing box sizes and their
@@ -53,4 +53,13 @@ lacunarity(a)
 lacunarity(a, box_sizes = c(1,3,5))
 # calculate lacunarity at all box sizes using the periodic boundary algorithm
 lacunarity(a, box_sizes = "all", periodic = TRUE)
+}
+\references{
+Allain, C., & Cloitre, M. (1991). Characterizing the lacunarity
+of random and deterministic fractal sets. \emph{Physical Review A}, \strong{44(6)},
+3552–3558. \url{https://doi.org/10.1103/PhysRevA.44.3552}.
+
+Feagin, R. A., Wu, X. B., & Feagin, T. (2007). Edge effects in lacunarity
+analysis. \emph{Ecological Modelling}, \strong{201(3–4)}, 262–268.
+\url{https://doi.org/10.1016/j.ecolmodel.2006.09.019}.
 }

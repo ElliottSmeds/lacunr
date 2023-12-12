@@ -12,7 +12,7 @@ with columns containing the X, Y, and Z coordinates of every point. Any
 additional columns are ignored.}
 
 \item{edge_length}{A numeric \code{\link[=vector]{vector}} of length \code{3}, containing
-values for the X, Y, and Z dimensions of each voxel.}
+values for the desired X, Y, and Z dimensions of each voxel.}
 
 \item{threads}{The number of threads to use for computing the voxel data.
 Default is 1.}

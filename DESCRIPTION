@@ -1,8 +1,8 @@
 Package: lacunr
 Type: Package
 Title: Fast 3D Lacunarity for LiDAR Voxel Data
-Version: 0.1.0
-Date: 2023-10-12
+Version: 0.1.1
+Date: 2023-12-11
 Authors@R: 
   c(person("Elliott", "Smeds",
            email = "elliott.alfred93@gmail.com",
@@ -13,10 +13,11 @@ Authors@R:
          comment = "Author of original version of voxelize() function"))
 URL: https://github.com/ElliottSmeds/lacunr
 BugReports: https://github.com/ElliottSmeds/lacunr/issues
-Description: Calculates lacunarity curves for 3D voxel data using a fast C++  
-    implementation of the gliding-box algorithm. Gliding-box lacunarity can 
-    be calculated using the traditional fixed-boundary algorithm or the 
-    periodic-boundary algorithm introduced by Feagin et al 2006.
+Description: Calculates 3D lacunarity from voxel data. It is designed to be used 
+  with LiDAR point clouds to measure the heterogeneity or "gappiness" of 
+  3-dimensional structures such as forest stands. It provides fast C++ functions 
+  to efficiently convert point cloud data to voxels and calculate lacunarity 
+  using different variants of Allain & Cloitre's well-known gliding-box algorithm.
 License: GPL (>= 3)
 Encoding: UTF-8
 Imports: Rcpp (>= 1.0.10), data.table
