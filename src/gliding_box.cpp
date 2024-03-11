@@ -42,8 +42,7 @@ DataFrame gliding_box(arma::ucube C, IntegerVector box_sizes) {
   
   // We get the smallest box size for free by summing the whole array
   double Freq = arma::accu(C);
-  double S1S2 = Freq / C.n_elem;
-  double lac1 = S1S2 / (S1S2 * S1S2);
+  double lac1 = C.n_elem / Freq;
   // output box size and lacunarity to vectors
   sizes(0) = 1;
   lacunarity(0) = lac1;
@@ -158,8 +157,7 @@ DataFrame gliding_box_periodic(arma::ucube C, IntegerVector box_sizes) {
   
   // We get the smallest box size for free by summing the whole array
   double Freq = arma::accu(C);
-  double S1S2 = Freq / C.n_elem;
-  double lac1 = S1S2 / (S1S2 * S1S2);
+  double lac1 = C.n_elem / Freq;
   // output box size and lacunarity to vectors
   sizes(0) = 1;
   lacunarity(0) = lac1;

@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![License: GPL v3](https://img.shields.io/badge/License-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![R-CMD-check](https://github.com/ElliottSmeds/lacunr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ElliottSmeds/lacunr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 `lacunr` is an R package for calculating 3D lacunarity from voxel data. It is designed to be used with LiDAR point clouds to measure the heterogeneity or "gappiness" of 3-dimensional structures such as forest stands. It provides fast C++ functions to efficiently convert point cloud data to voxels and calculate lacunarity using different variants of Allain & Cloitre's well-known gliding-box algorithm.

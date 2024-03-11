@@ -67,9 +67,9 @@ pad_array <- function(a, x = 0, y = 0, z = 0, fill = 0){
                      dim = c(abs(x), dim(a)[2], dim(a)[3]),
                      dimnames = list(paste0("padx_",1:abs(x)), NULL, NULL))
     if (x < 0){
-      padded <- abind(padding, a, along = 1)} 
+      padded <- abind::abind(padding, a, along = 1)} 
     else if (x > 0){
-      padded <- abind(a, padding, along = 1)}
+      padded <- abind::abind(a, padding, along = 1)}
   } else {
     padded <- a
   }
@@ -80,9 +80,9 @@ pad_array <- function(a, x = 0, y = 0, z = 0, fill = 0){
                      dim = c(dim(padded)[1], abs(y), dim(padded)[3]),
                      dimnames = list(NULL, paste0("pady_",1:abs(y)), NULL))
     if (y < 0){
-      padded <- abind(padding, padded, along = 2)} 
+      padded <- abind::abind(padding, padded, along = 2)} 
     else if (y > 0){
-      padded <- abind(padded, padding, along = 2)}
+      padded <- abind::abind(padded, padding, along = 2)}
   }
   
   # pad slices (z dimension)
@@ -91,9 +91,9 @@ pad_array <- function(a, x = 0, y = 0, z = 0, fill = 0){
                      dim = c(dim(padded)[1], dim(padded)[2], abs(z)),
                      dimnames = list(NULL, NULL, paste0("padz_",1:abs(z))))
     if (z < 0){
-      padded <- abind(padding, padded, along = 3)} 
+      padded <- abind::abind(padding, padded, along = 3)} 
     else if (z > 0){
-      padded <- abind(padded, padding, along = 3)}
+      padded <- abind::abind(padded, padding, along = 3)}
   }
   
   return(padded)

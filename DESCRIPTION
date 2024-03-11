@@ -21,7 +21,10 @@ Description: Calculates 3D lacunarity from voxel data. It is designed to be used
 License: GPL (>= 3)
 Encoding: UTF-8
 Imports: Rcpp (>= 1.0.10), data.table, abind
-Suggests: lidR
+Suggests: 
+    lidR,
+    testthat (>= 3.0.0)
 LinkingTo: Rcpp, RcppArmadillo, RcppThread
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+Config/testthat/edition: 3

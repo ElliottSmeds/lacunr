@@ -7,6 +7,7 @@
 
 [![License: GPL
 v3](https://img.shields.io/badge/License-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![R-CMD-check](https://github.com/ElliottSmeds/lacunr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ElliottSmeds/lacunr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 `lacunr` is an R package for calculating 3D lacunarity from voxel data.

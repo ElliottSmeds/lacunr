@@ -145,12 +145,14 @@ lacunarity <- function(x,
   
   # -------------------------- Calculate lacunarity ----------------------------
   # pass the array and box_sizes vector to the desired C++ function
-  if (periodic == FALSE){
-    lac_curve <- .gliding_box(C = x, box_sizes = sizes)
-  }
-  
-  else if (periodic == TRUE){
-    lac_curve <- .gliding_box_periodic(C = x, box_sizes = sizes)
+  if (is.logical(periodic) && length(periodic) == 1 && !is.na(periodic)){
+    if (periodic == FALSE){
+      lac_curve <- .gliding_box(C = x, box_sizes = sizes)
+    }
+    
+    else if (periodic == TRUE){
+      lac_curve <- .gliding_box_periodic(C = x, box_sizes = sizes)
+    }
   }
   
   else {
