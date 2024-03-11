@@ -1,8 +1,8 @@
 Package: lacunr
 Type: Package
 Title: Fast 3D Lacunarity for LiDAR Voxel Data
-Version: 0.1.1
-Date: 2023-12-11
+Version: 0.2.0
+Date: 2024-03-11
 Authors@R: 
   c(person("Elliott", "Smeds",
            email = "elliott.alfred93@gmail.com",
@@ -20,7 +20,7 @@ Description: Calculates 3D lacunarity from voxel data. It is designed to be used
   using different variants of Allain & Cloitre's well-known gliding-box algorithm.
 License: GPL (>= 3)
 Encoding: UTF-8
-Imports: Rcpp (>= 1.0.10), data.table
+Imports: Rcpp (>= 1.0.10), data.table, abind
 Suggests: lidR
 LinkingTo: Rcpp, RcppArmadillo, RcppThread
 Roxygen: list(markdown = TRUE)

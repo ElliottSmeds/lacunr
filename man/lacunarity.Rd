@@ -21,12 +21,12 @@ positive values. Values which exceed the dimensions of \code{x} are ignored.
 
 \item{periodic}{A Boolean. Determines which boundary algorithm to use, the
 classic fixed boundary by Allain and Cloitre (default) or the periodic
-boundary algorithm introduced by Feagin et al. 2006. The latter is slightly
+boundary algorithm introduced by Feagin et al. 2007. The latter is slightly
 slower but is more robust to edge effects.}
 }
 \value{
 A \code{\link[=data.frame]{data.frame}} containing box sizes and their
-corresponding raw and normalized Λ(r) lacunarity values. Lacunarity is
+corresponding Λ(r), normalized Λ(r), and H(r) values. Lacunarity is
 always computed for box size 1, even if the user supplies a custom
 \code{box_sizes} vector that omits it, as this value is required to calculate
 normalized lacunarity.
@@ -43,6 +43,13 @@ at different y-intercepts. This is rectified by normalizing the curve,
 typically by log-transforming it and dividing by the lacunarity value at
 the smallest box size (i.e. \code{log(Λ(r))/log(Λ(1))}). \code{lacunarity()} outputs
 both normalized and non-normalized Λ(r) curves for convenience.
+
+The function also computes H(r), a transformed lacunarity curve introduced
+by Feagin 2003. H(r) rescales normalized Λ(r) in terms of the Hurst
+exponent, where values greater than 0.5 indicate heterogeneity and values
+less than 0.5 indicate homogeneity. Where Λ(r) describes a pattern's
+deviation from translational invariance, H(r) describes its deviation from
+standard Brownian motion.
 }
 \examples{
 # generate array
@@ -58,6 +65,11 @@ lacunarity(a, box_sizes = "all", periodic = TRUE)
 Allain, C., & Cloitre, M. (1991). Characterizing the lacunarity
 of random and deterministic fractal sets. \emph{Physical Review A}, \strong{44(6)},
 3552–3558. \url{https://doi.org/10.1103/PhysRevA.44.3552}.
+
+Feagin, R. A. (2003). Relationship of second-order lacunarity, Hurst
+exponent, Brownian motion, and pattern organization. \emph{Physica A:
+Statistical Mechanics and its Applications}, \strong{328(3-4)}, 315-321.
+\url{https://doi.org/10.1016/S0378-4371(03)00524-7}.
 
 Feagin, R. A., Wu, X. B., & Feagin, T. (2007). Edge effects in lacunarity
 analysis. \emph{Ecological Modelling}, \strong{201(3–4)}, 262–268.

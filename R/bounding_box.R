@@ -120,7 +120,6 @@ bounding_box.default <- function(x, threshold = 0, edge_length = NULL){
                                    unique(filled$Y), 
                                    unique(filled$Z)))
   
-  # update class?
   
   return(lac_array)
 }

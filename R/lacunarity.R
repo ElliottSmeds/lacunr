@@ -11,6 +11,13 @@
 #'   the smallest box size (i.e. `log(Λ(r))/log(Λ(1))`). `lacunarity()` outputs
 #'   both normalized and non-normalized Λ(r) curves for convenience.
 #'
+#'   The function also computes H(r), a transformed lacunarity curve introduced
+#'   by Feagin 2003. H(r) rescales normalized Λ(r) in terms of the Hurst
+#'   exponent, where values greater than 0.5 indicate heterogeneity and values
+#'   less than 0.5 indicate homogeneity. Where Λ(r) describes a pattern's
+#'   deviation from translational invariance, H(r) describes its deviation from
+#'   standard Brownian motion.
+#'
 #' @param x A 3-dimensional [`array`][array()] of integer values
 #' @param box_sizes Which box sizes to use for calculating lacunarity:
 #'   * `"twos"` (the default) returns box sizes for all powers of two less than or
@@ -21,11 +28,11 @@
 #'   positive values. Values which exceed the dimensions of `x` are ignored.
 #' @param periodic A Boolean. Determines which boundary algorithm to use, the
 #'   classic fixed boundary by Allain and Cloitre (default) or the periodic
-#'   boundary algorithm introduced by Feagin et al. 2006. The latter is slightly
+#'   boundary algorithm introduced by Feagin et al. 2007. The latter is slightly
 #'   slower but is more robust to edge effects.
 #'
 #' @return A [`data.frame`][data.frame()] containing box sizes and their
-#'   corresponding raw and normalized Λ(r) lacunarity values. Lacunarity is
+#'   corresponding Λ(r), normalized Λ(r), and H(r) values. Lacunarity is
 #'   always computed for box size 1, even if the user supplies a custom
 #'   `box_sizes` vector that omits it, as this value is required to calculate
 #'   normalized lacunarity.
@@ -33,6 +40,11 @@
 #' @references Allain, C., & Cloitre, M. (1991). Characterizing the lacunarity
 #'   of random and deterministic fractal sets. *Physical Review A*, **44(6)**,
 #'   3552–3558. [https://doi.org/10.1103/PhysRevA.44.3552]().
+#'
+#'   Feagin, R. A. (2003). Relationship of second-order lacunarity, Hurst
+#'   exponent, Brownian motion, and pattern organization. *Physica A:
+#'   Statistical Mechanics and its Applications*, **328(3-4)**, 315-321.
+#'   [https://doi.org/10.1016/S0378-4371(03)00524-7]().
 #'
 #'   Feagin, R. A., Wu, X. B., & Feagin, T. (2007). Edge effects in lacunarity
 #'   analysis. *Ecological Modelling*, **201(3–4)**, 262–268.

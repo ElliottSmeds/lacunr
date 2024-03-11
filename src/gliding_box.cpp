@@ -103,11 +103,23 @@ DataFrame gliding_box(arma::ucube C, IntegerVector box_sizes) {
   // calculate normalized lacunarity
   arma::vec lacnorm = arma::log(lacunarity) / log(lac1);
   
-  // return dataframe of box sizes and lacunarity values
+  // find the smallest dimension of the input array
+  double L = (double) std::min<unsigned int>({Xdim,Ydim,Zdim});
+  
+  // calculate Brownian decay (a diagonal line) for H(r) calculation
+  // (requires converting box size vector from integers to doubles)
+  arma::vec dsize = arma::conv_to<arma::dvec>::from(sizes);
+  arma::vec diag = -(arma::log(dsize))/log(L) + 0.5;
+  
+  // compute H(r) by subtracting diagonal line from normalized lacunarity curve
+  arma::vec Hr = lacnorm - diag;
+  
+  // return dataframe of box sizes and lacunarity curves
   DataFrame lac_curve = 
     DataFrame::create(Named("box_size") = sizes,
                       Named("lacunarity") = lacunarity,
-                      Named("lac_norm") = lacnorm);
+                      Named("lac_norm") = lacnorm,
+                      Named("H_r") = Hr);
   return lac_curve;
 }
 
@@ -211,10 +223,22 @@ DataFrame gliding_box_periodic(arma::ucube C, IntegerVector box_sizes) {
   // calculate normalized lacunarity
   arma::vec lacnorm = arma::log(lacunarity) / log(lac1);
   
-  // return dataframe of box sizes and lacunarity values
+  // find the smallest dimension of the input array
+  double L = (double) std::min<unsigned int>({Xdim,Ydim,Zdim});
+  
+  // calculate Brownian decay (a diagonal line) for H(r) calculation
+  // (requires converting box size vector from integers to doubles)
+  arma::vec dsize = arma::conv_to<arma::dvec>::from(sizes);
+  arma::vec diag = -(arma::log(dsize))/log(L) + 0.5;
+  
+  // compute H(r) by subtracting diagonal line from normalized lacunarity curve
+  arma::vec Hr = lacnorm - diag;
+  
+  // return dataframe of box sizes and lacunarity curves
   DataFrame lac_curve = 
     DataFrame::create(Named("box_size") = sizes,
                       Named("lacunarity") = lacunarity,
-                      Named("lac_norm") = lacnorm);
+                      Named("lac_norm") = lacnorm,
+                      Named("H_r") = Hr);
   return lac_curve;
 }
