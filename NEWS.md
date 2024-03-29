@@ -5,6 +5,7 @@
 * Minor tweaks to `lacunarity()`:
     - The `periodic` argument now has improved error handling.
     - The underlying C++ function received a minor change to simplify how it calculates lacunarity at the smallest box size. This shouldn't alter the output.
+* Removed C++11 requirement from `Makevars[.win]` to make the package compatible with R version 4.3. This may cause issues building the package with R versions <= 3.5 on systems with very old compilers.
 
 ## lacunr 0.2.0 (Release date: 2024-03-11)
 
