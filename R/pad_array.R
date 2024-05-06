@@ -37,7 +37,6 @@
 #' # add one row of zeroes to bottom of array, and two columns to beginning
 #' pad <- pad_array(a, x = 1, y = -2)
 #'
-#' @importFrom abind abind
 pad_array <- function(a, x = 0, y = 0, z = 0, fill = 0){
   # -------------------------------- Checks ------------------------------------
   # check dimensions of array

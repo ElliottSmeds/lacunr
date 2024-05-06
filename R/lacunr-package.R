@@ -6,6 +6,6 @@
 #' @importFrom Rcpp sourceCpp
 #' @import data.table
 #' @useDynLib lacunr, .registration = TRUE
-#' @exportPattern "^[[:alpha:]]+"
+## #' @exportPattern "^[[:alpha:]]+"
 ## usethis namespace: end
 NULL

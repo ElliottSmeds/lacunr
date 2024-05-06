@@ -115,6 +115,6 @@ distinct results from the same input data. The chief advantages of
     For example, if you have a point cloud that spans 12 meters in the X
     dimension, and voxelize it at a resolution of 1 meter, the resulting
     data will be binned into 12 1-meter voxels along the X axis. The
-    same point cloud will be binned into 13 voxels by `voxel_metric()`.
+    same point cloud will be binned into 13 voxels by `voxel_metrics()`.
     This is due to differences in how each function aligns the point
     cloud data within the voxel grid.

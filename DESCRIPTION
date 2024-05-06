@@ -20,7 +20,12 @@ Description: Calculates 3D lacunarity from voxel data. It is designed to be used
   using different variants of Allain & Cloitre's well-known gliding-box algorithm.
 License: GPL (>= 3)
 Encoding: UTF-8
-Imports: Rcpp (>= 1.0.10), data.table, abind
+Imports: 
+    Rcpp (>= 1.0.10), 
+    data.table, 
+    abind,
+    ggplot2,
+    rlang
 Suggests: 
     lidR,
     testthat (>= 3.0.0)
