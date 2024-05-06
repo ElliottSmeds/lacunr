@@ -28,7 +28,9 @@ If \code{group_names} is left empty, the legend uses the names of the
 data.frames as supplied to \code{...}}
 }
 \value{
-A \code{ggplot} object displaying the lacunarity curve(s)
+A \code{ggplot} object displaying the lacunarity or H(r) curve(s). If
+multiple curves are supplied, their ordering in the plot legend will
+reflect the order they were listed in the function call.
 }
 \description{
 Plot lacunarity curve(s)

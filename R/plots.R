@@ -74,7 +74,11 @@ lac_plot <- function(..., log = TRUE, group_names = NULL){
   lac <- data.table::rbindlist(args, idcol = "Source")
   
   # reorder the levels of Source column to reflect input order
-  lac$Source <- factor(lac$Source, levels = as.character(substitute(...())))
+  if (!is.null(group_names)){
+    lac$Source <- factor(lac$Source, levels = group_names)
+  } else {
+    lac$Source <- factor(lac$Source, levels = as.character(substitute(...())))
+  }
   
   # determine x axis breaks
   box_max <- max(lac$box_size) # find the max x value
@@ -133,7 +137,11 @@ lacnorm_plot <- function(..., log = TRUE, group_names = NULL){
   lac <- data.table::rbindlist(args, idcol = "Source")
   
   # reorder the levels of Source column to reflect input order
-  lac$Source <- factor(lac$Source, levels = as.character(substitute(...())))
+  if (!is.null(group_names)){
+    lac$Source <- factor(lac$Source, levels = group_names)
+  } else {
+    lac$Source <- factor(lac$Source, levels = as.character(substitute(...())))
+  }
   
   # determine x axis breaks
   box_max <- max(lac$box_size) # find the max x value
@@ -190,7 +198,11 @@ hr_plot <- function(..., group_names = NULL){
   lac <- data.table::rbindlist(args, idcol = "Source")
   
   # reorder the levels of Source column to reflect input order
-  lac$Source <- factor(lac$Source, levels = as.character(substitute(...())))
+  if (!is.null(group_names)){
+    lac$Source <- factor(lac$Source, levels = group_names)
+  } else {
+    lac$Source <- factor(lac$Source, levels = as.character(substitute(...())))
+  }
   
   # determine x axis breaks
   box_max <- max(lac$box_size) # find the max x value
