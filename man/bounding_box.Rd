@@ -51,10 +51,23 @@ filtering tools for trimming the point data before voxelization are
 available in the \code{\link[lidR:lidR-package]{lidR}} package.
 }
 \examples{
+# Basic usage ---------------------------------------------------------------
 # simulate a diagonal line of points with XYZ coordinates
-pc <- data.frame(X = 0:99, Y = 0:99, Z = 0:99)
+pc <- data.frame(X = as.numeric(0:24), 
+                 Y = as.numeric(0:24), 
+                 Z = as.numeric(0:24))
 # convert point data to cubic voxels of length 5
 vox <- voxelize(pc, edge_length = c(5,5,5))
 # convert to voxel array
-bounding_box(vox)
+box <- bounding_box(vox)
+
+# Using lidR::voxel_metrics -------------------------------------------------
+if (require("lidR")){
+# reformat point data into rudimentary LAS object
+las <- suppressMessages(lidR::LAS(pc))
+# convert to voxels of length 5
+vox <- lidR::voxel_metrics(las, ~list(N = length(Z)), res = 5)
+# convert to voxel array
+box <- bounding_box(vox)
+}
 }

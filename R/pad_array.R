@@ -40,8 +40,8 @@
 pad_array <- function(a, x = 0, y = 0, z = 0, fill = 0){
   # -------------------------------- Checks ------------------------------------
   # check dimensions of array
-  if (length(dim(a)) != 3){
-    stop("input array must have 3 dimensions")
+  if (!is.array(a) | length(dim(a)) != 3){
+    stop("input must be a 3-dimensional array")
   }
   
   # check that array is numeric
@@ -51,12 +51,12 @@ pad_array <- function(a, x = 0, y = 0, z = 0, fill = 0){
   
   # check that x,y,z and fill are numeric
   if (any(!is.numeric(c(x, y, z, fill)))){
-    stop("inputs for `x`, `y`, `z`, and `fill` must be of type `numeric`")
+    stop("inputs for 'x', 'y', 'z', and 'fill' must be of type 'numeric'")
   }
   
   # check that x,y,z and fill are length 1
   if (any(lengths(list(x, y, z, fill)) != 1)){
-    stop("inputs for `x`, `y`, `z`, and `fill` must be of length 1")
+    stop("inputs for 'x', 'y', 'z', and 'fill' must be of length 1")
   }
   
   # -------------------------------- Padding ----------------------------------- 

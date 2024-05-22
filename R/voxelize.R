@@ -24,6 +24,11 @@
 #' 
 voxelize <- function(x, edge_length, threads = 1L) {
   # -------------------------------- Checks ------------------------------------
+  # check that the input is a dataframe
+  if (!is.data.frame(x)){
+    stop("Input must be a data.frame or data.table")
+  }
+  
   # check that the required columns are present
   if (!all(c("X", "Y", "Z") %in% names(x))){
     stop("Required columns not found, input data must have columns $X, $Y, and $Z")
@@ -35,16 +40,26 @@ voxelize <- function(x, edge_length, threads = 1L) {
   }
   
   # check that edge_length is numeric and of length 3
-  if (!is.numeric(edge_length)){
-    stop("'edge_length' argument must be of type 'numeric'")
+  if (!is.vector(edge_length, mode = "numeric")){
+    stop("'edge_length' argument must be a numeric vector")
   } 
-  else if (length(edge_length) != 3){
+  if (length(edge_length) != 3){
     stop("'edge_length' argument must be a vector of length 3")
   }
   
-  # check that threads value is numeric
-  if(!is.numeric(threads)){
-    stop("'threads' argument must be of type 'numeric'")
+  # check that edge_length values are greater than zero
+  if (!all(edge_length > 0)){
+    stop("'edge_length' values must be greater than zero")
+  }
+  
+  # check that threads value is numeric and length 1
+  if(!is.vector(threads, mode = "numeric") | length(threads) != 1){
+    stop("'threads' argument must be a single numeric value")
+  }
+  
+  # check that threads value is positive
+  if(threads < 1){
+    stop("'threads' argument cannot be negative or zero")
   }
   
   # ------------------------------- Voxelize -----------------------------------

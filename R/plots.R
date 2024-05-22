@@ -29,6 +29,23 @@ check_dataframes <- function(x, columns){
   }
 }
 
+# function to check the group_names argument
+check_groupnames <- function(ellipsis, groupnames){
+  # check that group_names is a character vector
+  if (!is.vector(groupnames, mode = "character")){
+    char_err <- simpleError("'group_names' argument must be a character vector",
+                            call = sys.call(-1))
+    stop(char_err)
+  }
+  
+  # check that group_names is same length as ellipsis
+  if (length(groupnames) != length(ellipsis)){
+    length_err <- simpleError("The number of 'group_names' does not match the number of data.frames",
+                              call = sys.call(-1))
+    stop(length_err)
+  }
+}
+
 #' Plot lacunarity curve(s)
 #'
 #' @param ... One or more [`data.frames`][data.frame()] containing lacunarity
@@ -62,6 +79,11 @@ check_dataframes <- function(x, columns){
 lac_plot <- function(..., log = TRUE, group_names = NULL){
   # check the input data.frames
   check_dataframes(list(...), columns = c("box_size", "lacunarity"))
+  
+  # check group_names if supplied
+  if (!is.null(group_names)){
+    check_groupnames(list(...), group_names)
+  }
   
   # convert ellipsis arguments to named list
   if (!is.null(group_names)){
@@ -104,13 +126,13 @@ lac_plot <- function(..., log = TRUE, group_names = NULL){
                                     linetype = !!group)) +
     ggplot2::geom_line() +
     ggplot2::geom_point() +
-    ggplot2::scale_x_continuous(trans = ifelse(log == TRUE, 
-                                               "log", 
-                                               "identity"),
+    ggplot2::scale_x_continuous(transform = ifelse(log == TRUE, 
+                                                   "log", 
+                                                   "identity"),
                                 breaks = xbreaks) +
-    ggplot2::scale_y_continuous(trans = ifelse(log == TRUE, 
-                                               "log", 
-                                               "identity"),
+    ggplot2::scale_y_continuous(transform = ifelse(log == TRUE, 
+                                                   "log", 
+                                                   "identity"),
                                 limits = c(1,max(lac$lacunarity)),
                                 breaks = 1:floor(max(lac$lacunarity))) +
     ggplot2::labs(x = "Box size",
@@ -125,6 +147,11 @@ lac_plot <- function(..., log = TRUE, group_names = NULL){
 lacnorm_plot <- function(..., log = TRUE, group_names = NULL){
   # check the input data.frames
   check_dataframes(list(...), columns = c("box_size", "lac_norm"))
+  
+  # check group_names if supplied
+  if (!is.null(group_names)){
+    check_groupnames(list(...), group_names)
+  }
   
   # convert ellipsis arguments to named list
   if (!is.null(group_names)){
@@ -167,11 +194,11 @@ lacnorm_plot <- function(..., log = TRUE, group_names = NULL){
                                     linetype = !!group)) +
     ggplot2::geom_line() +
     ggplot2::geom_point() +
-    ggplot2::scale_x_continuous(trans = ifelse(log == TRUE, 
-                                               "log", 
-                                               "identity"),
+    ggplot2::scale_x_continuous(transform = ifelse(log == TRUE, 
+                                                   "log", 
+                                                   "identity"),
                                 breaks = xbreaks) +
-    ggplot2::scale_y_continuous(trans = "identity",
+    ggplot2::scale_y_continuous(transform = "identity",
                                 limits = c(0,1),
                                 breaks = ggplot2::waiver()) +
     ggplot2::labs(x = "Box size",
@@ -186,6 +213,11 @@ lacnorm_plot <- function(..., log = TRUE, group_names = NULL){
 hr_plot <- function(..., group_names = NULL){
   # check the input data.frames
   check_dataframes(list(...), columns = c("box_size", "H_r"))
+  
+  # check group_names if supplied
+  if (!is.null(group_names)){
+    check_groupnames(list(...), group_names)
+  }
   
   # convert ellipsis arguments to named list
   if (!is.null(group_names)){
@@ -225,9 +257,9 @@ hr_plot <- function(..., group_names = NULL){
     ggplot2::geom_line() +
     ggplot2::geom_point() +
     ggplot2::geom_hline(yintercept =  0.5, linetype = "dashed") +
-    ggplot2::scale_x_continuous(trans = "log",
+    ggplot2::scale_x_continuous(transform = "log",
                                 breaks = xbreaks) +
-    ggplot2::scale_y_continuous(trans = "identity",
+    ggplot2::scale_y_continuous(transform = "identity",
                                 limits = c(-0.1,1.1),
                                 breaks = c(0, 0.25, 0.5, 0.75, 1)) +
     ggplot2::labs(x = "Box size",

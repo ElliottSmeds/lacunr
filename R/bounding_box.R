@@ -39,12 +39,25 @@
 #' @export
 #'
 #' @examples
+#' # Basic usage ---------------------------------------------------------------
 #' # simulate a diagonal line of points with XYZ coordinates
-#' pc <- data.frame(X = 0:99, Y = 0:99, Z = 0:99)
+#' pc <- data.frame(X = as.numeric(0:24), 
+#'                  Y = as.numeric(0:24), 
+#'                  Z = as.numeric(0:24))
 #' # convert point data to cubic voxels of length 5
 #' vox <- voxelize(pc, edge_length = c(5,5,5))
 #' # convert to voxel array
-#' bounding_box(vox)
+#' box <- bounding_box(vox)
+#' 
+#' # Using lidR::voxel_metrics -------------------------------------------------
+#' if (require("lidR")){
+#' # reformat point data into rudimentary LAS object
+#' las <- suppressMessages(lidR::LAS(pc))
+#' # convert to voxels of length 5
+#' vox <- lidR::voxel_metrics(las, ~list(N = length(Z)), res = 5)
+#' # convert to voxel array
+#' box <- bounding_box(vox)
+#' }
 bounding_box <- function(x, threshold = 0, edge_length = NULL){
   UseMethod("bounding_box", x)
 }
@@ -57,12 +70,12 @@ bounding_box.default <- function(x, threshold = 0, edge_length = NULL){
   
   # check that edge_length is defined
   if (is.null(edge_length)){
-    stop("No voxel dimensions specified, please enter a value for 'edge_length'")
+    stop("No voxel dimensions found, please enter a value for 'edge_length'")
   }
   
   # check that edge_length is numeric
-  if (!is.numeric(edge_length)){
-    stop("'edge_length' argument must be of type 'numeric'")
+  if (!is.vector(edge_length, mode = "numeric")){
+    stop("'edge_length' argument must be a numeric vector")
   }
   
   # check that edge_length has length 3
@@ -73,6 +86,11 @@ bounding_box.default <- function(x, threshold = 0, edge_length = NULL){
   # check that the required columns are present
   if (!all(c("X", "Y", "Z", "N") %in% names(x))){
     stop("Required columns not found, input data.table must have columns $X, $Y, $Z, and $N")
+  }
+  
+  # check that threshold argument is valid
+  if (!is.vector(threshold, mode = "numeric") | length(threshold) != 1){
+    stop("'threshold' argument must be a single numeric value")
   }
   
   # ------------------------- Process data.table -------------------------------
@@ -130,7 +148,8 @@ bounding_box.default <- function(x, threshold = 0, edge_length = NULL){
 bounding_box.lac_voxels <- function(x, threshold = 0, edge_length = NULL){
   
   # check that voxel_resolution attribute is correctly formatted
-  if (!is.numeric(attr(x, "voxel_resolution")) | length(attr(x, "voxel_resolution")) != 3){
+  if (!is.vector(attr(x, "voxel_resolution"), mode = "numeric") | 
+      length(attr(x, "voxel_resolution")) != 3){
     stop("'lac_voxels' object has improperly formatted attribute: 'voxel_resolution'")
   }
 
@@ -145,7 +164,13 @@ bounding_box.lac_voxels <- function(x, threshold = 0, edge_length = NULL){
 #' @usage NULL
 #' @export
 bounding_box.lasmetrics3d <- function(x, threshold = 0, edge_length = NULL){
-
+  
+  # check that res attribute is correctly formatted
+  if (!is.vector(attr(x, "res"), mode = "numeric") | 
+      length(attr(x, "res")) != 1){
+    stop("'lasmetrics3d' object has improperly formatted attribute: 'res'")
+  }
+  
   # fetch voxel dimensions from the attributes
   res <- rep(attr(x, "res"), 3)
   
