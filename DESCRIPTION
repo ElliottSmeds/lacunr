@@ -27,9 +27,15 @@ Imports:
     ggplot2,
     rlang
 Suggests: 
+    knitr,
     lidR,
+    rmarkdown,
     testthat (>= 3.0.0)
 LinkingTo: Rcpp, RcppArmadillo, RcppThread
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Config/testthat/edition: 3
+Depends: 
+    R (>= 2.10)
+LazyData: true
+VignetteBuilder: knitr
