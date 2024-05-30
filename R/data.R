@@ -14,8 +14,10 @@
 #' to make the dataset more compact. The X, Y, and Z coordinates were generated
 #' from the original Easting, Northing, and elevation by subtracting their
 #' minimum values.
+#' 
+#' `glassfire` is technically encoded as a `lasmetrics3d` object from the `lidR` package
 #'
-#' @format A data frame with 1,000,000 rows and 4 columns: `X`, `Y`, `Z`, and
+#' @format A data table with 1,000,000 rows and 4 columns: `X`, `Y`, `Z`, and
 #'   `Year`
 #' \describe{
 #'  \item{`X`,`Y`,`Z`}{The XYZ spatial positions of each point, in meters. X

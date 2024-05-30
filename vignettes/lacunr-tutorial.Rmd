@@ -1,0 +1,257 @@
+---
+title: "Computing 3D lacunarity with `lacunr`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Computing 3D lacunarity with `lacunr`}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+bibliography: references.bib
+csl: chicago-author-date-nosub.csl
+---
+
+```{r, include = FALSE}
+knitr::knit_hooks$set(pngquant = knitr::hook_pngquant)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  dev = "png", dev.args = list(type = "cairo-png"),
+  fig.retina=2,
+  pngquant = "--speed=1 --quality=50"
+)
+```
+
+`lacunr` is a package designed to measure the lacunarity of LiDAR data and other 3-dimensional spatial structures. This vignette provides a brief introduction to the concept of lacunarity, as well as a breakdown of the expected standard workflow when using this package.
+
+```{r setup}
+library(lacunr)
+```
+
+## What is lacunarity?
+
+Lacunarity --- from the Latin *lacuna* meaning "lake" or "gap" --- was introduced by Benoit Mandelbrot [-@mandelbrot_1982] to describe the space-filling properties of fractal patterns. It was later formalized by Gefen and colleagues [-@gefen_1983] as a measure of *translational invariance* --- put simply, how much do the various subregions of a spatial pattern differ from one another? The translational invariance depends both on the heterogeneity or "clumpiness" of the pattern, and also the scale at which it is measured.
+
+Lacunarity captures this scale-dependent variation using a *gliding-box algorithm* [@allain_1991]. For a given scale $r$, the spatial pattern is divided up into a grid of overlapping $r$-sized boxes. The total amount or "mass" of occupied space within each box is tallied, and then the lacunarity at that scale, $\Lambda(r)$, is simply the ratio of the variance of the box masses and their squared mean:
+
+$$\Lambda(r) = \displaystyle \frac{\mathrm{var}(masses_{r})}{\mathrm{ mean}(masses_{r})^{2}} + 1$$
+
+These $\Lambda(r)$ values are typically calculated at a range of box sizes, and the result plotted as a *lacunarity curve*. The shape of the curve, particularly its rate of decay toward translational invariance, will depend on the heterogenity of the spatial pattern.
+
+### Example lacunarity distributions
+
+To gain an intuition for how lacunarity changes across scales and spatial patterns, let's create four example datasets with varying properties. These will all take the form of 3-dimensional *binary maps* --- arrays containing only values of 1 (for occupied space) or 0 (for empty space) --- and all of them will contain exactly the same proportion of occupied space (50%).
+
+The first pattern is a perfectly uniform field of ones and zeroes, like a checkerboard. We can imagine this representing a maximally homogeneous distribution [@feagin_2005].
+
+```{r}
+# 16*16*16 uniform array
+uniform <- array(data = c(rep(c(rep(c(1,0),8), rep(c(0,1),8)),8),
+                          rep(c(rep(c(0,1),8), rep(c(1,0),8)),8)), 
+                 dim = c(16,16,16))
+```
+
+The second is a perfectly segregated array, with one half filled with ones and the other half with zeroes. We might think of this as a maximally heterogeneous distribution:
+
+```{r}
+# 16*16*16 segregated array
+segregated <- array(data = c(rep(1, 2048), rep(0, 2048)),
+                    dim = c(16,16,16))
+```
+
+The third array has been filled by drawing at random, without replacement, from a pool of 50% ones and 50% zeroes:
+
+```{r}
+# 16*16*16 random array
+set.seed(245)
+random <- array(data = sample(c(rep(1,2048), rep(0,2048)), 4096, replace = FALSE),
+                dim = c(16,16,16))
+```
+
+The fourth is once again drawn from an equal pool, but this time, there is a much higher probability of drawing a 1 than a 0, with the end result being that most of the ones will end up in the front of the array, and most zeroes in the back:
+
+```{r}
+# 16*16*16 gradient array
+set.seed(245)
+gradient <- array(data = sample(c(rep(1,2048), rep(0,2048)), 4096, replace = FALSE,
+                                prob = c(rep(0.9,2048), rep(0.1,2048))),
+                  dim = c(16,16,16))
+```
+
+We can plot cross-sections of these arrays to get a clearer sense of how their spatial patterns differ. The plots below show occupied cells as black and empty ones as white:
+
+```{r fig.width=6, fig.asp=1/4, out.width="97%"}
+par(mfrow = c(1, 4), mar = c(0.5,0.5,0.5,0.5), bg = "gray90")
+image(t(uniform[1,,]),col = c("white","black"),axes = FALSE, asp = 1)
+image(t(segregated[1,,]),col = c("white","black"),axes = FALSE, asp = 1)
+image(t(random[1,,]),col = c("white","black"),axes = FALSE, asp = 1)
+image(t(gradient[1,,]),col = c("white","black"),axes = FALSE, asp = 1)
+```
+
+Keep in mind that the arrays themselves are 3 dimensional --- these figures merely show a 2D slice of each of them. We can see very clearly that each spatial pattern is quite different, but `lacunr` offers a means of quantifying those differences. This is accomplished using the `lacunarity()` function:
+
+```{r}
+# calculate lacunarity at all box sizes for each array
+lac_unif <- lacunarity(uniform, box_sizes = "all")
+lac_segregated <- lacunarity(segregated, box_sizes = "all")
+lac_random <- lacunarity(random, box_sizes = "all")
+lac_grad <- lacunarity(gradient, box_sizes = "all")
+```
+
+`lacunarity()` returns a `data.frame` containing $\Lambda(r)$ values at the desired box sizes. These can be plotted using one of `lacunr`'s convenience plotting functions:
+
+```{r fig.width=6, out.width="97%", fig.asp=1/2}
+# plot all four lacunarity curves
+lac_plot(lac_segregated, lac_grad, lac_random, lac_unif,
+         group_names = c("Segregated","Gradient","Random","Uniform"))
+```
+
+There are several key takeaways from this figure:
+
+1. **All four lacunarity curves start at the same point.** The lacunarity at the smallest box size, $\Lambda(1)$, depends exclusively on the proportion of the spatial pattern that is taken up by occupied space [@plotnick_1996]. In this instance, we have deliberately given all of these arrays an occupancy of 0.5, and so for all four, $\Lambda(1) = 1/0.5 = 2$. This will be important to keep in mind if we ever compare two spatial patterns with differing occupancy values.
+2. **(Raw) Lacunarity values have a lower bound of 1.** Recall that the $\Lambda(r)$ formula includes adding 1 to the variance/mean ratio. So when there is zero variance in box masses, lacunarity becomes 1.
+3. **Clustered patterns decay to 1 slowly.** $\Lambda(r)$ is simply the variance of box masses divided by the squared mean. In the segregated array, most box masses will be either completely full or completely empty, leading to high variance and thus a higher $\Lambda(r)$. This trend continues until the box sizes start to approach the dimensions of the array itself, at which point there is a sharp decline. The gradient array is less perfectly clustered, but it still maintains a fair amount of heterogeneity across all spatial scales.
+4. **Homogeneous patterns decay to 1 quickly.** In contrast to the clustered patterns, the uniform array drops immediately to 1 at the second box size --- there is no variance at any scale apart from $\Lambda(1)$. The random array starts off with some minor variation at very small box sizes, but this quickly decays to homogeneity as the scale increases --- past a certain box size, one region of the array is more or less interchangeable with any other region.
+
+Lacunarity curves thus give us the ability to quantify both *how* heterogeneous a given spatial pattern is, and also *at what range of spatial scales* it remains heterogeneous.
+
+## Working with real world data
+
+Now let's use `lacunr` to analyze some real LiDAR data. The package comes with an example dataset, `glassfire`, which contains point cloud data from two scans of a 24*24m forest plot in Northern California. These scans cover the exact same section of oak forest, but they were taken before and after a major disturbance in the form of a wildfire.
+
+We can see the impact this has had on the forest stand by viewing the point cloud from above:
+```{r eval=FALSE}
+library(ggplot2)
+
+# plot point cloud data at each time point
+plot <- ggplot(data = glassfire, aes(x = X, y = Y)) +
+  geom_raster(aes(fill = Z)) +
+  facet_grid(cols = vars(Year)) +
+  scale_fill_viridis_c(option = "plasma") +
+  theme(panel.grid = element_blank(),
+        panel.background = element_rect(fill = "black"),
+        aspect.ratio = 1)
+print(plot)
+```
+```{r echo=FALSE, fig.width=6, out.width="97%", fig.asp=1/2, cache=FALSE}
+library(ggplot2)
+suppressPackageStartupMessages(library(data.table))
+
+raster <- glassfire[, .(X,Y,Z,Year,
+                        XY = paste0(as.character(X), ",", as.character(Y)))][
+  , .(X = first(X),Y = first(Y),Z = max(Z)), by = .(Year, XY)]
+
+# plot point cloud data at each time point
+plot <- ggplot(data = raster, aes(x = X, y = Y)) +
+  geom_raster(aes(fill = Z)) +
+  facet_grid(cols = vars(Year)) +
+  scale_fill_viridis_c(option = "plasma") +
+  theme(panel.grid = element_blank(),
+        panel.background = element_rect(fill = "black"),
+        aspect.ratio = 1)
+print(plot)
+```
+
+Even when represented in two dimensions, the change in the canopy structure is obvious --- one of the trees has burned down. We might guess intuitively that this new gap has made the forest stand more heterogeneous. But calculating the change in lacunarity will give us a quantitative measure of that heterogeneity.
+
+#### `voxelize()` point clouds
+
+The first task when working with LiDAR data is to convert the raw point cloud into a grid of binned values. These bins are known as *voxels* --- the 3D analogue to pixels in a 2D raster image. Voxelization is necessary because it controls for variations in point density. In most LiDAR scans, objects that are closer to the scanner will have a denser coating of points. Using the raw number of points to measure occupancy will unfairly weight regions of the point cloud that were close to the scanner. So we use voxelization to bin the point cloud into an even grid of occupied space.
+
+In `lacunr`, this step is performed using the `voxelize()` function. For this example, we will voxelize the point data for each time point at a resolution of 0.5m.
+```{r}
+# voxelize the pre-fire point cloud
+voxpre <- voxelize(glassfire[glassfire$Year == "2020",], edge_length = c(0.5,0.5,0.5))
+# voxelize the post-fire point cloud
+voxpost <- voxelize(glassfire[glassfire$Year == "2021",], edge_length = c(0.5,0.5,0.5))
+```
+
+Now we have a `data.table` for each time point containing both the coordinates of the voxels and the number of points binned within them.
+
+#### Converting to 3D array with `bounding_box()`
+
+Next we need to take the voxel data and turn them into a pair of 3-dimensional arrays like in the example above. Processing the data this way accomplishes two things:
+
+1. It gives us a clear delineation between occupied spaces (encoded as 1), and empty spaces (encoded as 0). The voxel data only contains occupied spaces.
+2. It stores adjacent spaces contiguously in memory. Because we are analyzing the spatial pattern in rectangular windows (the $r$-sized boxes), the algorithm can run faster when we store adjacent spaces in the same block of memory. This is known as *locality of reference*, and it is something that arrays are rather good for.
+
+We can create these arrays using the `bounding_box()` function. This comes with the optional argument `threshold`, which we can use to filter out any voxels with an extremely low number of points. For instance, we can decide in this example that voxels with only one point shouldn't really be counted as occupied space. We can create the arrays like so:
+```{r}
+# create array for pre-fire voxels
+boxpre <- bounding_box(voxpre, threshold = 1)
+# create array for post-fire voxels
+boxpost <- bounding_box(voxpost, threshold = 1)
+```
+
+#### Match dimensions using `pad_array()`
+
+If we examine the dimensions of the resulting arrays, we will notice a problem:
+
+```{r}
+dim(boxpre)
+dim(boxpost)
+```
+
+The dimensions are not quite the same. Specifically, the third dimension --- which in `lacunr` represents the vertical axis --- is one value shorter in the pre-fire array than it is in the post-fire array.
+
+Why did this happen? It's because `bounding_box()` uses the largest and smallest spatial coordinates in the voxel data to determine the size of the resulting array. It looks like the canopy in the second time point has gotten slightly taller, just enough to be binned into an extra layer of voxels.
+
+But this presents a problem if we want to compare the lacunarity values from these two time points. Remember, this is exactly the same stand of forest, so ideally we want `lacunarity()` to explore the same volume of space with each scan. The simplest way to accomplish this is to add an additional layer of empty space to the top of the pre-fire array so it matches the post-fire one.
+
+We can do this with the `pad_array()` function, which will add as much extra space as we want to any side of the array:
+
+```{r}
+# pad the top of the pre-fire array with one layer of empty space
+boxpre <- pad_array(boxpre, z = 1)
+```
+
+Now when we compare the two arrays, their dimensions match exactly.
+
+```{r}
+dim(boxpre) == dim(boxpost)
+```
+
+#### Comparing lacunarity pre- and post-fire
+
+We now have what we need to measure lacunarity for both time points. It is a simple as calling the `lacunarity()` function like we did with the synthetic data:
+
+```{r}
+lac_pre <- lacunarity(boxpre, box_sizes = "all")
+lac_post <- lacunarity(boxpost, box_sizes = "all")
+```
+
+Then we can plot the lacunarity curves and examine the difference. However, recall from the previous example that the value of $\Lambda(1)$ is dependent on the proportion of occupied space. A quick check of our pre- and post-fire arrays shows that they have very different occupancy values:
+
+```{r}
+sum(boxpre)/length(boxpre)
+sum(boxpost)/length(boxpost)
+```
+
+This means that each lacunarity curve will start at a different Y value, which makes it harder to compare the curves to one another. Luckily, we can factor out the effect of occupancy by using *normalized lacunarity* [@plotnick_1996]. This is typically calculated by log transforming the raw lacunarity values and dividing them by the lacunarity at the smallest box size (or, in mathematical terms, $\log\Lambda(r)/\log\Lambda(1)$). Normalized lacunarity thus always starts at 1 and decays to 0.
+
+`lacunarity()` automatically calculates normalized lacunarity, and we can plot it using `lacnorm_plot()`:
+
+```{r fig.width=6, out.width="97%", fig.asp=1/2}
+# plot normalized lacunarity pre- and post-fire
+lacnorm_plot(lac_pre, lac_post, group_names = c("Pre-fire", "Post-fire"))
+```
+
+Note the values on the x axis are in terms of the voxel number. To get the box sizes in meters, simply multiply the values by the voxel resolution, which in our case is 0.5.
+
+The plot shows that heterogeneity has increased substantially after the fire, with the curve remaining well above the pre-fire curve until around box size 32 (or 16 meters). This aligns with what we would expect from a major disturbance like a whole tree burning down. We might imagine a forest stand in which only the understory burned, in which case the post-fire curve might only remain taller for box sizes up to, say, 5 meters instead of 16.
+
+## Measuring spatial correlation with $\mathrm{H}(r)$
+
+In addition to raw and normalized lacunarity curves, `lacunarity()` also calculates a metric called $\mathrm{H}(r)$. $\mathrm{H}(r)$ is a transformed version of normalized lacunarity originally introduced by Feagin [-@feagin_2003]. Rather than measuring a spatial pattern's decay toward translational invariance, $\mathrm{H}(r)$ instead measures its deviation from *standard Brownian motion*. The letter $\mathrm{H}$ is a reference to the *Hurst exponent*, a metric used to quantify the autocorrelation of neighboring samples. It is commonly used for time series but in fact has general applications to probability theory as a component of *fractional Brownian motion* [@mandelbrot_1968].
+
+We can plot the $\mathrm{H}(r)$ curves for our pre- and post-fire data using the function `hr_plot()`:
+
+```{r fig.width=6, out.width="97%", fig.asp=1/2}
+# plot H(r) pre- and post-fire
+hr_plot(lac_pre, lac_post,
+        group_names = c("Pre-fire","Post-fire"))
+```
+
+The Hurst exponent can range between 0 and 1, with 0.5 corresponding to standard Brownian decay, where any two regions of the spatial pattern tend to have no correlation with each other. Values of $\mathrm{H}(r)$ greater than 0.5 indicate that neighboring spatial values are **autocorrelated/persistent** --- local variations tend to remain local --- while values less than 0.5 mean that neighboring values are **anticorrelated/anti-persistent** --- local variations tend to repeat across the whole spatial pattern.
+
+We can see in the above plot that the post-fire data is more autocorrelated up to a little past box size 16, while the pre-fire data remains close to or slightly below the neutral zone of 0.5 for all box sizes. $\mathrm{H}(r)$ thus enables us not only to compare spatial patterns against one another, but also measure them against a theoretical spatial distribution that is neither heterogeneous nor homogeneous.
+
+## References
