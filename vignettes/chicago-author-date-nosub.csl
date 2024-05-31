@@ -207,7 +207,7 @@
           <choose>
             <if variable="DOI">
               <text variable="DOI" prefix="https://doi.org/"/>
-            </if>
+            </if>            
             <else>
               <text variable="URL"/>
             </else>

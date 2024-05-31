@@ -39,16 +39,16 @@
 #'
 #' @references Allain, C., & Cloitre, M. (1991). Characterizing the lacunarity
 #'   of random and deterministic fractal sets. *Physical Review A*, **44(6)**,
-#'   3552–3558. [https://doi.org/10.1103/PhysRevA.44.3552]().
+#'   3552–3558. \doi{doi:10.1103/PhysRevA.44.3552}.
 #'
 #'   Feagin, R. A. (2003). Relationship of second-order lacunarity, Hurst
 #'   exponent, Brownian motion, and pattern organization. *Physica A:
 #'   Statistical Mechanics and its Applications*, **328(3-4)**, 315-321.
-#'   [https://doi.org/10.1016/S0378-4371(03)00524-7]().
+#'   \doi{doi:10.1016/S0378-4371(03)00524-7}.
 #'
 #'   Feagin, R. A., Wu, X. B., & Feagin, T. (2007). Edge effects in lacunarity
 #'   analysis. *Ecological Modelling*, **201(3–4)**, 262–268.
-#'   [https://doi.org/10.1016/j.ecolmodel.2006.09.019]().
+#'   \doi{doi:10.1016/j.ecolmodel.2006.09.019}.
 #' @export
 #'
 #' @examples

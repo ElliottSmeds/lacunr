@@ -14,8 +14,10 @@
 #' to make the dataset more compact. The X, Y, and Z coordinates were generated
 #' from the original Easting, Northing, and elevation by subtracting their
 #' minimum values.
-#' 
-#' `glassfire` is technically encoded as a `lasmetrics3d` object from the `lidR` package
+#'
+#' `glassfire` is technically encoded as a `lasmetrics3d` object from the `lidR`
+#' package. This class inherits from `data.table()`, but has the added benefit
+#' that it can be rendered as a 3D rgl plot using `lidR::plot.lasmetrics3d()`.
 #'
 #' @format A data table with 1,000,000 rows and 4 columns: `X`, `Y`, `Z`, and
 #'   `Year`

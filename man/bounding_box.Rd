@@ -62,12 +62,13 @@ vox <- voxelize(pc, edge_length = c(5,5,5))
 box <- bounding_box(vox)
 
 # Using lidR::voxel_metrics -------------------------------------------------
-if (require("lidR")){
+\donttest{if (require("lidR")){
 # reformat point data into rudimentary LAS object
 las <- suppressMessages(lidR::LAS(pc))
 # convert to voxels of length 5
 vox <- lidR::voxel_metrics(las, ~list(N = length(Z)), res = 5)
 # convert to voxel array
 box <- bounding_box(vox)
+}
 }
 }

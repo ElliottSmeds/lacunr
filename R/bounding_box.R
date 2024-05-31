@@ -50,13 +50,14 @@
 #' box <- bounding_box(vox)
 #' 
 #' # Using lidR::voxel_metrics -------------------------------------------------
-#' if (require("lidR")){
+#' \donttest{if (require("lidR")){
 #' # reformat point data into rudimentary LAS object
 #' las <- suppressMessages(lidR::LAS(pc))
 #' # convert to voxels of length 5
 #' vox <- lidR::voxel_metrics(las, ~list(N = length(Z)), res = 5)
 #' # convert to voxel array
 #' box <- bounding_box(vox)
+#' }
 #' }
 bounding_box <- function(x, threshold = 0, edge_length = NULL){
   UseMethod("bounding_box", x)

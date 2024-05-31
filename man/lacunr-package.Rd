@@ -4,9 +4,9 @@
 \name{lacunr-package}
 \alias{lacunr}
 \alias{lacunr-package}
-\title{lacunr: Fast 3D Lacunarity for LiDAR Voxel Data}
+\title{lacunr: Fast 3D Lacunarity for Voxel Data}
 \description{
-Calculates 3D lacunarity from voxel data. It is designed to be used with LiDAR point clouds to measure the heterogeneity or "gappiness" of 3-dimensional structures such as forest stands. It provides fast C++ functions to efficiently convert point cloud data to voxels and calculate lacunarity using different variants of Allain & Cloitre's well-known gliding-box algorithm.
+Calculate 3D lacunarity from voxel data. It is designed for use with point clouds generated from Light Detection And Ranging (LiDAR) scans in order to measure the spatial heterogeneity of 3-dimensional structures such as forest stands. It provides fast 'C++' functions to efficiently convert point cloud data to voxels and calculate lacunarity using different variants of the gliding-box algorithm originated by Allain & Cloitre (1991) \doi{10.1103/PhysRevA.44.3552}.
 }
 \seealso{
 Useful links:
@@ -17,7 +17,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Elliott Smeds \email{elliott.alfred93@gmail.com} (\href{https://orcid.org/0000-0003-1054-7491}{ORCID})
+\strong{Maintainer}: Elliott Smeds \email{elliott.alfred93@gmail.com} (\href{https://orcid.org/0000-0003-1054-7491}{ORCID}) [copyright holder]
 
 Other contributors:
 \itemize{
