@@ -78,13 +78,20 @@ gradient <- array(data = sample(c(rep(1,2048), rep(0,2048)), 4096, replace = FAL
 ```
 
 We can plot cross-sections of these arrays to get a clearer sense of how their spatial patterns differ. The plots below show occupied cells as black and empty ones as white:
-
+```{r echo=FALSE}
+# store the default graphics parameters so they can be reset later
+defaultpar <- par(no.readonly = TRUE)
+```
 ```{r fig.width=6, fig.asp=1/4, out.width="97%"}
 par(mfrow = c(1, 4), mar = c(0.5,0.5,0.5,0.5), bg = "gray90")
 image(t(uniform[1,,]),col = c("white","black"),axes = FALSE, asp = 1)
 image(t(segregated[1,,]),col = c("white","black"),axes = FALSE, asp = 1)
 image(t(random[1,,]),col = c("white","black"),axes = FALSE, asp = 1)
 image(t(gradient[1,,]),col = c("white","black"),axes = FALSE, asp = 1)
+```
+```{r echo=FALSE}
+# reset graphics parameters to default
+par(defaultpar)
 ```
 
 Keep in mind that the arrays themselves are 3 dimensional --- these figures merely show a 2D slice of each of them. We can see very clearly that each spatial pattern is quite different, but `lacunr` offers a means of quantifying those differences. This is accomplished using the `lacunarity()` function:

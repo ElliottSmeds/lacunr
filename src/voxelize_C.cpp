@@ -1,6 +1,9 @@
 // A C++ script for voxelizing LiDAR point cloud data
-// Adapted by Elliott A. Smeds from code authored by J. Antonio Guzmán Q. for 
-// the R package 'rTLS', under the terms of the GPL-3.0 open software license
+
+// The following function, 'voxelization_rcpp()', was adapted by Elliott A.
+// Smeds from code authored by J. Antonio Guzmán Q. for the R package 'rTLS'
+// (https://github.com/Antguz/rTLS), under the terms of the GPL-3.0 open
+// software license
 
 #include <RcppArmadillo.h>
 #include <RcppThread.h>

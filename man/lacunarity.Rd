@@ -26,29 +26,29 @@ slower but is more robust to edge effects.}
 }
 \value{
 A \code{\link[=data.frame]{data.frame}} containing box sizes and their
-corresponding Λ(r), normalized Λ(r), and H(r) values. Lacunarity is
+corresponding \eqn{\Lambda(r)}, normalized \eqn{\Lambda(r)}, and \eqn{\mathrm{H}(r)} values. Lacunarity is
 always computed for box size 1, even if the user supplies a custom
 \code{box_sizes} vector that omits it, as this value is required to calculate
 normalized lacunarity.
 }
 \description{
-Generates Λ(r) lacunarity curves for a specified set of box sizes, using one
+Generates \eqn{\Lambda(r)} lacunarity curves for a specified set of box sizes, using one
 of two versions of the gliding-box algorithm
 }
 \details{
-The raw Λ(r) values depend on the proportion of occupied voxels
+The raw \eqn{\Lambda(r)} values depend on the proportion of occupied voxels
 within the data space. As a result, it is difficult to compare two spatial
 patterns with different occupancy proportions because the curves will begin
 at different y-intercepts. This is rectified by normalizing the curve,
 typically by log-transforming it and dividing by the lacunarity value at
-the smallest box size (i.e. \code{log(Λ(r))/log(Λ(1))}). \code{lacunarity()} outputs
-both normalized and non-normalized Λ(r) curves for convenience.
+the smallest box size (i.e. \eqn{\log \Lambda(r)/\log \Lambda(1)}). \code{lacunarity()} outputs
+both normalized and non-normalized \eqn{\Lambda(r)} curves for convenience.
 
-The function also computes H(r), a transformed lacunarity curve introduced
-by Feagin 2003. H(r) rescales normalized Λ(r) in terms of the Hurst
+The function also computes \eqn{\mathrm{H}(r)}, a transformed lacunarity curve introduced
+by Feagin 2003. \eqn{\mathrm{H}(r)} rescales normalized \eqn{\Lambda(r)} in terms of the Hurst
 exponent, where values greater than 0.5 indicate heterogeneity and values
-less than 0.5 indicate homogeneity. Where Λ(r) describes a pattern's
-deviation from translational invariance, H(r) describes its deviation from
+less than 0.5 indicate homogeneity. Where \eqn{\Lambda(r)} describes a pattern's
+deviation from translational invariance, \eqn{\mathrm{H}(r)} describes its deviation from
 standard Brownian motion.
 }
 \examples{

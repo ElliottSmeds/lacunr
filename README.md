@@ -19,7 +19,13 @@ of Allain & Cloitre’s well-known gliding-box algorithm.
 
 ## Installation
 
-You can install the development version of `lacunr` from
+You can install `lacunr` from CRAN with:
+
+``` r
+install.packages("lacunr")
+```
+
+Or you can install the development version of `lacunr` from
 [GitHub](https://github.com/) with:
 
 ``` r

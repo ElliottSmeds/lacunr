@@ -1,14 +1,21 @@
-## lacunr 0.2.0.9000
+## lacunr 1.0.1
 
+### New features:
+
+* New plotting functions `lac_plot()`, `lacnorm_plot()`, and `hr_plot()` now let users conveniently plot lacunarity or H(r) curves returned by `lacunarity()`.
+* Package now has a sample LiDAR dataset, `glassfire`.
+* Package now includes tutorial vignettes.
 * Package now has a working test suite.
+
+### Improvements:
+
 * Package is now set up for CI via Github Actions.
 * Minor tweaks to `lacunarity()`:
     - The `periodic` argument now has improved error handling.
     - The underlying C++ function received a minor change to simplify how it calculates lacunarity at the smallest box size. This shouldn't alter the output.
+* Improvements to error handling of `bounding_box()` and `voxelize()`.
 * Removed C++11 requirement from `Makevars[.win]` to make the package compatible with R version 4.3. This may cause issues building the package with R versions <= 3.5 on systems with very old compilers.
-* New plotting functions `lac_plot()`, `lacnorm_plot()`, and `hr_plot()` now let users conveniently plot lacunarity or H(r) curves returned by `lacunarity()`.
-* Package now has a sample LiDAR dataset, `glassfire`.
-* Package now includes tutorial vignettes.
+* Various bug fixes in the package documentation to satisfy `R CMD check` --- mainly issues involving formatting of DOIs and removing broken URLs.
 
 ## lacunr 0.2.0 (Release date: 2024-03-11)
 

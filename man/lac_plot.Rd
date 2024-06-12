@@ -40,7 +40,7 @@ Plot lacunarity curve(s)
 a <- array(data = rep(c(1,0), 125), dim = c(5,5,5))
 # calculate lacunarity at all box sizes
 lac_curve <- lacunarity(a, box_sizes = "all")
-# plot Λ(r) curve
+# plot raw lacunarity curve
 lac_plot(lac_curve)
 
 }

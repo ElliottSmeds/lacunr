@@ -29,6 +29,7 @@ test_that("invalid 'lac_voxels' throws error", {
 })
 
 test_that("invalid 'lasmetrics3d' throws error", {
+  skip_if_not_installed("lidR")
   suppressMessages(las <- lidR::LAS(data.table(X = as.numeric(1:3), 
                                                Y = as.numeric(1:3), 
                                                Z = as.numeric(1:3))))
@@ -49,6 +50,7 @@ test_that("'lac_voxels' gives accurate output", {
 })
 
 test_that("'lasmetrics3d' gives accurate output", {
+  skip_if_not_installed("lidR")
   suppressMessages(las <- lidR::LAS(data.table(X = as.numeric(1:3), 
                                                Y = as.numeric(1:3), 
                                                Z = as.numeric(1:3))))

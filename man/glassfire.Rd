@@ -35,6 +35,8 @@ to make the dataset more compact. The X, Y, and Z coordinates were generated
 from the original Easting, Northing, and elevation by subtracting their
 minimum values.
 
-\code{glassfire} is technically encoded as a \code{lasmetrics3d} object from the \code{lidR} package
+\code{glassfire} is technically encoded as a \code{lasmetrics3d} object from the \code{lidR}
+package. This class inherits from \code{data.table()}, but has the added benefit
+that it can be rendered as a 3D rgl plot using \code{lidR::plot.lasmetrics3d()}.
 }
 \keyword{datasets}
