@@ -1,7 +1,7 @@
 Package: lacunr
 Type: Package
 Title: Fast 3D Lacunarity for Voxel Data
-Version: 1.0.1
+Version: 1.0.1.9000
 Date: 2024-06-03
 Authors@R: c(
     person("Elliott", "Smeds", , "elliott.alfred93@gmail.com", role = c("aut", "cre", "cph"),

@@ -1,4 +1,6 @@
-# lacunr 1.0.1
+# lacunr 1.0.1.9000 (development version)
+
+# lacunr 1.0.1 (Release date: 2024-06-03)
 
 ## New features:
 
